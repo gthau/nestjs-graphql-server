@@ -1,0 +1,14 @@
+type Asset {
+  id: String!
+  name: String!
+  slug: String!
+  symbol: String!
+}
+
+input AssetInput {
+  symbol: String!
+}
+
+extend type Query {
+  asset(input: AssetInput!): Asset
+}

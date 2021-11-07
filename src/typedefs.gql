@@ -1,0 +1,13 @@
+type Query {
+  ping: Void
+}
+
+type Mutation {
+  ping: Void
+}
+
+type Subscription {
+  ping: Void
+}
+
+scalar Void
