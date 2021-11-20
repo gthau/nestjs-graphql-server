@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/function';
 import * as O from 'fp-ts/lib/Option';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import { Asset, AssetInput, AssetResult } from 'src/schema.gql';
+import { AssetInput, AssetResult, AssetsInput, AssetsResult } from 'src/schema.gql';
 import { AssetsService } from '../assets.service';
 
 @Resolver()
@@ -48,12 +48,31 @@ export class AssetsResolver {
     )();
   }
 
-  private getDefaultAsset(): Asset {
-    return {
-      id: '0',
-      name: 'Unknown coin',
-      slug: 'unknowncoin',
-      symbol: 'UKNC',
-    };
+  @Query()
+  assets(@Args('input') { symbols }: AssetsInput): Promise<AssetsResult> {
+    return pipe(
+      this.assetsService.getBySymbols(symbols),
+      TE.foldW(
+        (e) => T.of({ error: e.message }), // GraphqlError
+        (assets) => {
+          const notFound = symbols
+            .filter((s) => !assets.find((a) => a.symbol === s))
+            .map((s) => ({ symbol: s }));
+          return T.of({
+            notFound,
+            assets,
+          }); // AssetsResponse
+        },
+      ),
+    )();
   }
+
+  // private getDefaultAsset(): Asset {
+  //   return {
+  //     id: '0',
+  //     name: 'Unknown coin',
+  //     slug: 'unknowncoin',
+  //     symbol: 'UKNC',
+  //   };
+  // }
 }

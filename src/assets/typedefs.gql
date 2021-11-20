@@ -21,8 +21,23 @@ input AssetInput {
   symbol: String!
 }
 
+input AssetsInput {
+  symbols: [String!]!
+}
+
+type AssetsResponse {
+  assets: [Asset!]
+  notFound: [AssetNotFound!]
+}
+
+type GraphqlError {
+  error: String!
+}
+
 union AssetResult = AssetResponse | AssetNotFound | AssetError
+union AssetsResult = AssetsResponse | GraphqlError
 
 extend type Query {
   asset(input: AssetInput!): AssetResult!
+  assets(input: AssetsInput!): AssetsResult!
 }

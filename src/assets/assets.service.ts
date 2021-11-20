@@ -8,7 +8,10 @@ import { AssetsFetcher } from './assets-fetcher';
 
 @Injectable()
 export class AssetsService {
-  constructor(private readonly assetsCache: AssetsCache, private readonly assetsFetcher: AssetsFetcher) {}
+  constructor(
+    private readonly assetsCache: AssetsCache,
+    private readonly assetsFetcher: AssetsFetcher,
+  ) {}
 
   public get(symbol: string): TE.TaskEither<Error, O.Option<Asset>> {
     return pipe(
@@ -22,6 +25,10 @@ export class AssetsService {
         (asset) => TE.right(O.some(asset)),
       ),
     );
+  }
+
+  public getBySymbols(symbols: string[]): TE.TaskEither<Error, Asset[]> {
+    return this.assetsFetcher.assetsBySymbols(symbols.filter((s) => !!s));
   }
 
   private fetchAndCacheAssets(): TE.TaskEither<Error, Asset[]> {
