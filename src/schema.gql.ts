@@ -19,9 +19,24 @@ export interface Asset {
     symbol: string;
 }
 
+export interface AssetResponse {
+    __typename?: 'AssetResponse';
+    asset?: Nullable<Asset>;
+}
+
+export interface AssetError {
+    __typename?: 'AssetError';
+    error: string;
+}
+
+export interface AssetNotFound {
+    __typename?: 'AssetNotFound';
+    symbol: string;
+}
+
 export interface IQuery {
     __typename?: 'IQuery';
-    asset(input: AssetInput): Nullable<Asset> | Promise<Nullable<Asset>>;
+    asset(input: AssetInput): AssetResult | Promise<AssetResult>;
     ping(): Nullable<Void> | Promise<Nullable<Void>>;
 }
 
@@ -36,4 +51,5 @@ export interface ISubscription {
 }
 
 export type Void = void;
+export type AssetResult = AssetResponse | AssetNotFound | AssetError;
 type Nullable<T> = T | null;

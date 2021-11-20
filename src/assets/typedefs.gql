@@ -5,10 +5,24 @@ type Asset {
   symbol: String!
 }
 
+type AssetResponse {
+  asset: Asset
+}
+
+type AssetError {
+  error: String!
+}
+
+type AssetNotFound {
+  symbol: String!
+}
+
 input AssetInput {
   symbol: String!
 }
 
+union AssetResult = AssetResponse | AssetNotFound | AssetError
+
 extend type Query {
-  asset(input: AssetInput!): Asset
+  asset(input: AssetInput!): AssetResult!
 }
