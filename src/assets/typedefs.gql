@@ -30,14 +30,20 @@ type AssetsResponse {
   notFound: [AssetNotFound!]
 }
 
+type AllAssetsResponse {
+  assets: [Asset!]
+}
+
 type GraphqlError {
   error: String!
 }
 
 union AssetResult = AssetResponse | AssetNotFound | AssetError
 union AssetsResult = AssetsResponse | GraphqlError
+union AllAssetsResult = AllAssetsResponse | GraphqlError
 
 extend type Query {
   asset(input: AssetInput!): AssetResult!
   assets(input: AssetsInput!): AssetsResult!
+  allAssets: AllAssetsResult!
 }

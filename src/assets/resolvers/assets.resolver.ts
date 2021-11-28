@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/function';
 import * as O from 'fp-ts/lib/Option';
 import * as T from 'fp-ts/lib/Task';
 import * as TE from 'fp-ts/lib/TaskEither';
-import { AssetInput, AssetResult, AssetsInput, AssetsResult } from 'src/schema.gql';
+import { AllAssetsResult, AssetInput, AssetResult, AssetsInput, AssetsResult } from 'src/schema.gql';
 import { AssetsService } from '../assets.service';
 
 @Resolver()
@@ -63,6 +63,17 @@ export class AssetsResolver {
             assets,
           }); // AssetsResponse
         },
+      ),
+    )();
+  }
+
+  @Query()
+  allAssets(): Promise<AllAssetsResult> {
+    return pipe(
+      this.assetsService.getAll(),
+      TE.foldW(
+        (e) => T.of({ error: e.message }), // AssetError
+        (assets) => T.of({ assets }), // AllAssetsResponse
       ),
     )();
   }

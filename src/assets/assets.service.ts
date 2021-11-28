@@ -31,6 +31,16 @@ export class AssetsService {
     return this.assetsFetcher.assetsBySymbols(symbols.filter((s) => !!s));
   }
 
+  public getAll(): TE.TaskEither<Error, Asset[]> {
+    return pipe(
+      this.assetsCache.getAll(),
+      O.fold(
+        () => this.fetchAndCacheAssets(),
+        (assets) => TE.of(assets),
+      ),
+    );
+  }
+
   private fetchAndCacheAssets(): TE.TaskEither<Error, Asset[]> {
     return pipe(
       this.assetsFetcher.fetch(),

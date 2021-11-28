@@ -44,6 +44,11 @@ export interface AssetsResponse {
     notFound?: Nullable<AssetNotFound[]>;
 }
 
+export interface AllAssetsResponse {
+    __typename?: 'AllAssetsResponse';
+    assets?: Nullable<Asset[]>;
+}
+
 export interface GraphqlError {
     __typename?: 'GraphqlError';
     error: string;
@@ -53,6 +58,7 @@ export interface IQuery {
     __typename?: 'IQuery';
     asset(input: AssetInput): AssetResult | Promise<AssetResult>;
     assets(input: AssetsInput): AssetsResult | Promise<AssetsResult>;
+    allAssets(): AllAssetsResult | Promise<AllAssetsResult>;
     ping(): Nullable<Void> | Promise<Nullable<Void>>;
 }
 
@@ -69,4 +75,5 @@ export interface ISubscription {
 export type Void = void;
 export type AssetResult = AssetResponse | AssetNotFound | AssetError;
 export type AssetsResult = AssetsResponse | GraphqlError;
+export type AllAssetsResult = AllAssetsResponse | GraphqlError;
 type Nullable<T> = T | null;
