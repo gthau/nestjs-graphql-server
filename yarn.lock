@@ -3186,6 +3186,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dataloader@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "dataloader@npm:2.0.0"
+  checksum: 9f10b9d2e35225b08a72435facfe40c0c124e329f43bd0fe4d67411ee667d12145f7ce63f9b74f73af8556dc6a98bae59147a5cca2171315dc1de509d4db04c0
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -4356,6 +4363,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.0.0
     apollo-server-express: ^3.5.0
     apollo-server-fastify: ^3.5.0
+    dataloader: ^2.0.0
     eslint: ^8.0.1
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^4.0.0

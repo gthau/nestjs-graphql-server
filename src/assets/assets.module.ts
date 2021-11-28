@@ -19,5 +19,6 @@ import {
     AssetsResultResolver,
     AllAssetsResultResolver,
   ],
+  exports: [AssetsService],
 })
 export class AssetsModule {}
